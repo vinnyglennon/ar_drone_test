@@ -1,0 +1,75 @@
+<html>
+<head>
+  <title>BrowserControl</title>
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="keypress.js"></script>
+  <script type="text/javascript" src="control.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io.connect();
+  </script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<script>
+socket.on('dump', function(data){
+  $('textarea#commands').val(data)
+})
+jQuery(function(){
+  $('form#controls').on('submit', function (e) {
+    script = $('textarea#commands').val()
+    console.log('playing back', script)
+    e.preventDefault();
+
+    socket.emit('playback', script)
+  });
+})
+</script>
+<form id="controls">
+<textarea id="commands" placeholder="Paste your drone commands to replay"></textarea>
+<input type="submit" value="Run">
+</form>
+
+<div id="keycontrols">
+  <div id="key-a">
+    &larr;
+  </div>
+  <div id="key-w">
+    &uarr;
+  </div>
+  <div id="key-s">
+    &darr;
+  </div>
+  <div id="key-d">
+    &rarr;
+  </div>
+
+  <div id="key-j">
+    &#8634;
+  </div>
+  <div id="key-i">
+    &#8613;
+  </div>
+  <div id="key-k">
+    &#8615;
+  </div>
+  <div id="key-l">
+    &#8635;
+  </div>
+</div>
+<br />
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<img src="http://localhost:8000" />
+
+</body>
+</html>
+
